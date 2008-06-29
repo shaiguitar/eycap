@@ -1,4 +1,14 @@
 = eycap
+basic premise-layout-structure of this gem: 
+
+  #{GEM-DIR}/eycap/lib/capistrano
+    this is used for the filtered_remote_cache strategry.this is how eycap first came about. 
+
+    everything else should go in here:
+
+  #{GEM-DIR}/eycap-version/lib/eycap
+    lib/eycap/lib => put all your ruby classes definitions (for example, Eylogger, Memcached, and so on).
+    lib/eycap/recipies => put all your capistrano-specific tasks (for example, memcached:flush, nginx:restart, etc).    
 
 == DESCRIPTION:
 
