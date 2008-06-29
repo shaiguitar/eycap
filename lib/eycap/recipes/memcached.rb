@@ -1,3 +1,11 @@
+#require file in the lib dir to aquire the corresponding class you wish
+#to use in the file. 
+#so #{GEMDDIR}/eycap/lib/eycap/recipes/memcached.rb requires 
+#   #{GEMDDIR}/eycap/lib/eycap/lib/memcached.rb
+if File.exists? File.join(File.dirname(__FILE__), "..", "lib", __FILE__)
+  require File.join(File.dirname(__FILE__), "..", "lib", __FILE__)
+end
+
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :memcached do 
     desc "Start memcached"

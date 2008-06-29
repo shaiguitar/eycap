@@ -1,5 +1,9 @@
+#require all files in lib dir
+#Dir.glob(File.join(File.dirname(__FILE__), 'lib/*.rb')).each {|f| require f }
 require 'eycap/lib/ey_logger'
 require 'eycap/lib/ey_logger_hooks'
+require 'eycap/lib/memcached'
+
 require 'eycap/recipes/database'
 require 'eycap/recipes/ferret'
 require 'eycap/recipes/mongrel'
