@@ -1,11 +1,3 @@
-#require file in the lib dir to aquire the corresponding class you wish
-#to use in the file. 
-#so #{GEMDDIR}/eycap/lib/eycap/recipes/memcached.rb requires 
-#   #{GEMDDIR}/eycap/lib/eycap/lib/memcached.rb
-if File.exists? File.join(File.dirname(__FILE__), "..", "lib", __FILE__)
-  require File.join(File.dirname(__FILE__), "..", "lib", __FILE__)
-end
-
 Capistrano::Configuration.instance(:must_exist).load do
   namespace :memcached do 
     desc "Start memcached"
@@ -22,7 +14,10 @@ Capistrano::Configuration.instance(:must_exist).load do
     end        
     desc "flush memcached."
     task :flush, :roles => :app, :only => {:memcached => true} do 
-      Capistrano::Memcached.flush(11211)      
+      put File.read(File.join(File.dirname(__FILE__),'..','lib','memcached.rb')), "/tmp/memcached.rb"
+      
+      run "/usr/bin/env ruby /tmp/memcached.rb -e 'Capistrano::Memcached.flush(11211)'"
+      #run "rm /tmp/memcached.rb"
     end
     desc "Symlink the memcached.yml file into place if it exists"
     task :symlink_configs, :roles => :app, :only => {:memcached => true }, :except => { :no_release => true } do
